@@ -1,18 +1,41 @@
 package com.example.demo.controller;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.demo.mapper.UserMapper;
 import com.example.demo.urlRoute.User;
+import org.apache.ibatis.annotations.Select;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class UserController {
+    @Autowired
+    private UserMapper userMapper;
+
     @GetMapping("/user/{id}")
     public int getUserById(@PathVariable int id){
         return id;
     }
 
+    @GetMapping("/usermessage")
+    public List<User> aotmo(){
+//        List<User> users= userMapper.find();
+
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("name", "lzy");
+        List<User> users= userMapper.selectList(wrapper);
+//        List<User> users= userMapper.selectList(null);
+        return users;
+    }
+
     @PostMapping("/user")
-    public String save(User user){
-        return "saving";
+    public int charu(User user){
+//        int x = userMapper.charu(user);
+        int x = userMapper.insert(user);
+        return x;
     }
 
     @PutMapping("/user")
