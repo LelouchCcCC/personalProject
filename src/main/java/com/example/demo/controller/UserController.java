@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class UserController {
     @Autowired
     private UserMapper userMapper;
@@ -24,10 +25,10 @@ public class UserController {
     public List<User> aotmo(){
 //        List<User> users= userMapper.find();
 
-        QueryWrapper wrapper = new QueryWrapper();
-        wrapper.eq("name", "lzy");
-        List<User> users= userMapper.selectList(wrapper);
-//        List<User> users= userMapper.selectList(null);
+//        QueryWrapper wrapper = new QueryWrapper();
+//        wrapper.eq("name", "lzy");
+//        List<User> users= userMapper.selectList(wrapper);
+        List<User> users= userMapper.selectList(null);
         return users;
     }
 
