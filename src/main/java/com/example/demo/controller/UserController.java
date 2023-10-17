@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.urlRoute.User;
+import com.example.demo.utils.JwtUtils;
+import io.jsonwebtoken.Jwts;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -47,5 +49,12 @@ public class UserController {
     @DeleteMapping("/user/{id}")
     public String delete(@PathVariable int id){
         return "deleting"+id;
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody User user){
+        System.out.println("8398");
+        System.out.println(JwtUtils.generateToken(user.getName()));
+        return "ok";
     }
 }
