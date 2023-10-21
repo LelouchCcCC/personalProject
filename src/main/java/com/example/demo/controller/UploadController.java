@@ -28,8 +28,11 @@ public class UploadController {
         if (!dir.exists()){
             dir.mkdir();
         }
+        // need to adjust the name here, not fixed name for every item
         File file1 = new File(path+"\\a.jpg");
         System.out.println(file1.getName());
+        String fullAddress = path + "\\a.jpg";
+        System.out.println(fullAddress);
         file.transferTo(file1);
     }
 }
