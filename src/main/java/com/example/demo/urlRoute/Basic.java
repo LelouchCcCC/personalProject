@@ -102,6 +102,22 @@ public class Basic {
         return linkedInLink;
     }
 
+    public Basic() {
+    }
+
+    public Basic(String name, Date birth, String school, Double phone, Double subphone, String mailbox, String submailbox, String photo, String githubLink, String linkedInLink) {
+        this.name = name;
+        this.birth = birth;
+        School = school;
+        this.phone = phone;
+        this.subphone = subphone;
+        this.mailbox = mailbox;
+        this.submailbox = submailbox;
+        this.photo = photo;
+        this.githubLink = githubLink;
+        this.linkedInLink = linkedInLink;
+    }
+
     public void setLinkedInLink(String linkedInLink) {
         this.linkedInLink = linkedInLink;
     }
