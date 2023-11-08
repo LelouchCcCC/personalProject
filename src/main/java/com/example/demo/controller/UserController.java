@@ -53,8 +53,12 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(@RequestBody User user){
-        System.out.println("8398");
-        System.out.println(JwtUtils.generateToken(user.getName()));
-        return "ok";
+        String token = JwtUtils.generateToken(user.getName());
+        return token;
+    }
+
+    public String checkLogin(@RequestBody String token){
+        String name = JwtUtils.getUsernameFromToken(token);
+        return name;
     }
 }
