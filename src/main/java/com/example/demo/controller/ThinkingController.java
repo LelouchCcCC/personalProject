@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.demo.mapper.LcThinkingMapper;
 import com.example.demo.urlRoute.Thinking;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +25,9 @@ public class ThinkingController {
         return thinkingMapper.selectList(queryWrapper);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<String> addThinking(@RequestBody String token, @RequestBody Thinking thinking) {
+    @PostMapping("/userthinking")
+    public ResponseEntity<String> addThinking(HttpServletRequest request, @RequestBody Thinking thinking) {
+        String token = extractToken(request);
         String name = getUsernameFromToken(token);
         System.out.println(name);
 //        System.out.println(thinking.toString());
@@ -38,6 +40,14 @@ public class ThinkingController {
 //        }
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add thinking.");
+    }
+
+    private String extractToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7); // Remove "Bearer " prefix
+        }
+        return null;
     }
 
 
