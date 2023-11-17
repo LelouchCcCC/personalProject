@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.example.demo.utils.JwtUtils.getUsernameFromToken;
+
 @RestController
 @RequestMapping("/thinking")
 public class ThinkingController {
@@ -22,15 +25,19 @@ public class ThinkingController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addThinking(@RequestBody Thinking thinking) {
-        System.out.println(thinking.toString());
-        int result = thinkingMapper.insert(thinking);
+    public ResponseEntity<String> addThinking(@RequestBody String token, @RequestBody Thinking thinking) {
+        String name = getUsernameFromToken(token);
+        System.out.println(name);
+//        System.out.println(thinking.toString());
+//        int result = thinkingMapper.insert(thinking);
+//
+//        if (result > 0) {
+//            return ResponseEntity.ok("Thinking added successfully.");
+//        } else {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add thinking.");
+//        }
 
-        if (result > 0) {
-            return ResponseEntity.ok("Thinking added successfully.");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add thinking.");
-        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add thinking.");
     }
 
 

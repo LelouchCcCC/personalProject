@@ -54,6 +54,7 @@ public class UserController {
     @PostMapping("/login")
     public String login(@RequestBody User user){
         String token = JwtUtils.generateToken(user.getName());
+        System.out.println(token);
         return token;
     }
 
