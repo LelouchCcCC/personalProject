@@ -12,6 +12,10 @@ public class Thinking {
     private Integer id;
     @Schema(description = "user name")
     private String name;
+    @Schema(description = "url")
+    private String url;
+    @Schema(description = "summary")
+    private String summary;
     @Schema(description = "the date the content is posted")
     private Date date;
     @Schema(description = "the content for thinking")
@@ -19,15 +23,52 @@ public class Thinking {
     @Schema(description = "code for it")
     private String code;
 
+    public Thinking(Integer id, String name, String url, String summary, Date date, String content, String code) {
+        this.id = id;
+        this.name = name;
+        this.url = url;
+        this.summary = summary;
+        this.date = date;
+        this.content = content;
+        this.code = code;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
         return "Thinking{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                ", summary='" + summary + '\'' +
                 ", date=" + date +
                 ", content='" + content + '\'' +
                 ", code='" + code + '\'' +
                 '}';
+    }
+
+    public Thinking(Integer id, String name, String summary, Date date, String content, String code) {
+        this.id = id;
+        this.name = name;
+        this.summary = summary;
+        this.date = date;
+        this.content = content;
+        this.code = code;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public Integer getId() {
