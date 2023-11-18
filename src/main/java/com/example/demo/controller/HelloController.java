@@ -32,15 +32,15 @@ public class HelloController {
 
     @RequestMapping(value = "/postTest2", method = RequestMethod.POST)
     public String postTest2(User user) {
-        System.out.println(user.getName());
-        System.out.println(user.getPasswd());
+        System.out.println(user.getUsername());
+        System.out.println(user.getPassword());
         return "ok";
     }
 
     @RequestMapping(value = "/postTest3", method = RequestMethod.POST)
     public String postTest3(@RequestBody User user) {
-        System.out.println(user.getName());
-        System.out.println(user.getPasswd());
+        System.out.println(user.getUsername());
+        System.out.println(user.getPassword());
         return "ok";
     }
 

@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+
+import static com.example.demo.utils.ApiResponseCodeUtils.*;
 
 @RestController
 @CrossOrigin
@@ -52,10 +55,21 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody User user){
-        String token = JwtUtils.generateToken(user.getName());
-        System.out.println(token);
-        return token;
+    public Map<String, Object> login(@RequestBody User user){
+        User foundUser = userMapper.selectOne(new QueryWrapper<User>()
+                .eq("username", user.getUsername())
+                .eq("password", user.getPassword()));
+
+        // Check if a user was found with the given credentials
+        if (foundUser != null) {
+            // Generate a token since credentials are valid
+            String token = JwtUtils.generateToken(user.getUsername());
+            System.out.println(token);
+            return generateResponse(SUCCESS, "login successfully",token);
+        } else {
+            // Return some error message or token indicating failed login
+            return generateResponse(USER_AUTHENTICATION_FAILURE, "Invalid credentials", null);
+        }
     }
 
     public String checkLogin(@RequestBody String token){

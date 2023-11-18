@@ -8,39 +8,39 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class User {
     @TableId(type = IdType.AUTO)  // this line can make the key in User auto increse when not state next line in insert
     @Schema(description = "名字")
-    private String name;
+    private String username;
     @Schema(description = "密码")
-    private int passwd;
-
-    public String getName() {
-        return name;
-    }
+    private String password;
 
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
-                ", passwd=" + passwd +
+                "username='" + username + '\'' +
+                ", password=" + password +
                 '}';
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getPasswd() {
-        return passwd;
-    }
-
-    public void setPasswd(int passwd) {
-        this.passwd = passwd;
-    }
-
-    public User(String name, int passwd) {
-        this.name = name;
-        this.passwd = passwd;
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public User() {
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
