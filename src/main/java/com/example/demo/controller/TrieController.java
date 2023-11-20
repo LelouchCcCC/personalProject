@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -27,7 +30,17 @@ public class TrieController {
     }
 
     @GetMapping("/startsWith")
-    public List<String> startsWith(@RequestParam String prefix) {
-        return trieService.getTrie().startsWith(prefix);
+    public List<Map> startsWith(@RequestParam String prefix) {
+        List<String> list= trieService.getTrie().startsWith(prefix);
+        List<Map> res = new ArrayList<>();
+        if (list==null){
+            return res;
+        }
+        for (String li:list){
+            Map<String, String> map = new HashMap<>();
+            map.put("value", li);
+            res.add(map);
+        }
+        return res;
     }
 }

@@ -20,7 +20,6 @@ public class TrieService {
     private final Trie trie = new Trie();
 
     public List<String> loadDataFromDatabase() {
-        // 使用 MyBatis Plus 查询数据库并获取 technology 字段
         return techStackMapper.selectList(null)
                 .stream()
                 .map(TechStack::getTechnology)

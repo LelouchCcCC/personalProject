@@ -2,7 +2,13 @@ package com.example.demo.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.demo.mapper.LcThinkingMapper;
+import com.example.demo.mapper.TechStackMapper;
+import com.example.demo.service.TrieService;
+import com.example.demo.urlRoute.TechStack;
 import com.example.demo.urlRoute.Thinking;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.http.HttpServletRequest;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +27,10 @@ import static com.example.demo.utils.JwtUtils.getUsernameFromToken;
 public class ThinkingController {
     @Autowired
     private LcThinkingMapper thinkingMapper;
+    @Autowired
+    private TrieService trieService;
+    @Autowired
+    private TechStackMapper techStackMapper;
     @GetMapping("/byName")
     public List<Thinking> getThinkingsByName(@RequestParam String name) {
         QueryWrapper<Thinking> queryWrapper = new QueryWrapper<>();
@@ -29,18 +39,36 @@ public class ThinkingController {
     }
 
     @PostMapping("/userthinking")
-    public ResponseEntity<String> addThinking(HttpServletRequest request, @RequestBody Thinking thinking) {
-        String token = extractToken(request);
-        String name = getUsernameFromToken(token);
-        thinking.setDate(new Date());
-        thinking.setName(name);
-        int result = thinkingMapper.insert(thinking);
-        Integer id = thinking.getId();
+    public ResponseEntity<String> addThinking(HttpServletRequest request, @RequestBody Thinking thinking, List<String> items) {
+        try {
+            String token = extractToken(request);
+            String name = getUsernameFromToken(token);
 
-        if (result > 0) {
-            return ResponseEntity.ok("Thinking added successfully.");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add thinking.");
+            thinking.setDate(new Date());
+            thinking.setName(name);
+            int result = thinkingMapper.insert(thinking);
+            Integer id = thinking.getId();
+            for (String item:items){
+                boolean sts = trieService.getTrie().search(item);
+                if(!sts){
+                    trieService.getTrie().insert(item);
+                    TechStack ts = new TechStack();
+                    ts.setTechnology(item);
+                    techStackMapper.insert(ts);
+                }
+            }
+
+            if (result > 0) {
+                return ResponseEntity.ok("Thinking added successfully.");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add thinking.");
+            }
+        } catch (ExpiredJwtException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token expired.");
+        } catch (MalformedJwtException | SignatureException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid token.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
         }
 
     }
