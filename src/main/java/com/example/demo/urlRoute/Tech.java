@@ -8,38 +8,53 @@ public class Tech {
     @TableId(type = IdType.AUTO)
     @Schema(description = "the only id")
     private Integer id;
+    @Schema(description = "thinking id")
+    private Integer thinkingId;
     @Schema(description = "the technology stack")
-    private String techName;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public Tech(Integer id, String techName) {
-        this.id = id;
-        this.techName = techName;
-    }
+    private String tech;
 
     @Override
     public String toString() {
         return "Tech{" +
                 "id=" + id +
-                ", techName='" + techName + '\'' +
+                ", thinkingId=" + thinkingId +
+                ", tech='" + tech + '\'' +
                 '}';
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getTechName() {
-        return techName;
+    public Integer getThinkingId() {
+        return thinkingId;
     }
 
-    public void setTechName(String techName) {
-        this.techName = techName;
+    public void setThinkingId(Integer thinkingId) {
+        this.thinkingId = thinkingId;
+    }
+
+    public String getTech() {
+        return tech;
+    }
+
+    public void setTech(String tech) {
+        this.tech = tech;
+    }
+
+    public Tech(Integer id, Integer thinkingId, String tech) {
+        this.id = id;
+        this.thinkingId = thinkingId;
+        this.tech = tech;
     }
 
     public Tech() {
     }
 }
+
+
+

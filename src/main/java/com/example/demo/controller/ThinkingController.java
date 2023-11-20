@@ -2,10 +2,14 @@ package com.example.demo.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.demo.mapper.LcThinkingMapper;
+import com.example.demo.mapper.TechMapper;
 import com.example.demo.mapper.TechStackMapper;
+import com.example.demo.service.ThinkingRequest;
 import com.example.demo.service.TrieService;
+import com.example.demo.urlRoute.Tech;
 import com.example.demo.urlRoute.TechStack;
 import com.example.demo.urlRoute.Thinking;
+import com.example.demo.utils.ItemList;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
@@ -16,8 +20,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import static com.example.demo.utils.JwtUtils.getUsernameFromToken;
 
@@ -31,6 +37,8 @@ public class ThinkingController {
     private TrieService trieService;
     @Autowired
     private TechStackMapper techStackMapper;
+    @Autowired
+    private TechMapper techMapper;
     @GetMapping("/byName")
     public List<Thinking> getThinkingsByName(@RequestParam String name) {
         QueryWrapper<Thinking> queryWrapper = new QueryWrapper<>();
@@ -39,8 +47,10 @@ public class ThinkingController {
     }
 
     @PostMapping("/userthinking")
-    public ResponseEntity<String> addThinking(HttpServletRequest request, @RequestBody Thinking thinking, List<String> items) {
+    public ResponseEntity<String> addThinking(HttpServletRequest request, @RequestBody ThinkingRequest tr) {
         try {
+        Thinking thinking = tr.getThinking();
+        List<String> items = tr.getItems();
             String token = extractToken(request);
             String name = getUsernameFromToken(token);
 
@@ -56,6 +66,10 @@ public class ThinkingController {
                     ts.setTechnology(item);
                     techStackMapper.insert(ts);
                 }
+                Tech tech = new Tech();
+                tech.setThinkingId(id);
+                tech.setTech(item);
+                techMapper.insert(tech);
             }
 
             if (result > 0) {

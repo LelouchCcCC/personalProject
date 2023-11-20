@@ -1,7 +1,14 @@
 package com.example.demo.urlRoute;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public class TechStack {
+    @TableId(type = IdType.AUTO)
+    @Schema(description = "techStack id")
     private Integer id;
+    @Schema(description = "techStack used")
     private String technology;
 
     @Override
