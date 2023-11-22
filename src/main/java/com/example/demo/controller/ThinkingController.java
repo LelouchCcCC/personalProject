@@ -39,7 +39,7 @@ public class ThinkingController {
     private TechStackMapper techStackMapper;
     @Autowired
     private TechMapper techMapper;
-    @GetMapping("/byName")
+    @GetMapping("/userthinking")
     public List<Thinking> getThinkingsByName(@RequestParam String name) {
         QueryWrapper<Thinking> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("name", name);
