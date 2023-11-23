@@ -87,6 +87,18 @@ public class ThinkingController {
 
     }
 
+    @GetMapping("/stacked")
+    public List<String> findstack(@RequestParam Integer thinking_id){
+        QueryWrapper<Tech> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("thinking_id", thinking_id);
+        List<Tech> res = techMapper.selectList(queryWrapper);
+        List<String> li = new ArrayList<>();
+        for (Tech tech : res) {
+            li.add(tech.getTech());
+        }
+        return li;
+    }
+
     private String extractToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
