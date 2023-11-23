@@ -14,6 +14,12 @@ public class Thinking {
     private String name;
     @Schema(description = "url")
     private String url;
+    @Schema(description = "leetcode problem number")
+    private int number;
+    @Schema(description = "heading")
+    private String heading;
+    @Schema(description = "programme")
+    private String lan;
     @Schema(description = "summary")
     private String summary;
     @Schema(description = "the date the content is posted")
@@ -23,52 +29,20 @@ public class Thinking {
     @Schema(description = "code for it")
     private String code;
 
-    public Thinking(Integer id, String name, String url, String summary, Date date, String content, String code) {
-        this.id = id;
-        this.name = name;
-        this.url = url;
-        this.summary = summary;
-        this.date = date;
-        this.content = content;
-        this.code = code;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     @Override
     public String toString() {
         return "Thinking{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
+                ", number=" + number +
+                ", heading='" + heading + '\'' +
+                ", lan='" + lan + '\'' +
                 ", summary='" + summary + '\'' +
                 ", date=" + date +
                 ", content='" + content + '\'' +
                 ", code='" + code + '\'' +
                 '}';
-    }
-
-    public Thinking(Integer id, String name, String summary, Date date, String content, String code) {
-        this.id = id;
-        this.name = name;
-        this.summary = summary;
-        this.date = date;
-        this.content = content;
-        this.code = code;
-    }
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
     }
 
     public Integer getId() {
@@ -85,6 +59,46 @@ public class Thinking {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public String getHeading() {
+        return heading;
+    }
+
+    public void setHeading(String heading) {
+        this.heading = heading;
+    }
+
+    public String getLan() {
+        return lan;
+    }
+
+    public void setLan(String lan) {
+        this.lan = lan;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public Date getDate() {
@@ -111,9 +125,14 @@ public class Thinking {
         this.code = code;
     }
 
-    public Thinking(Integer id, String name, Date date, String content, String code) {
+    public Thinking(Integer id, String name, String url, int number, String heading, String lan, String summary, Date date, String content, String code) {
         this.id = id;
         this.name = name;
+        this.url = url;
+        this.number = number;
+        this.heading = heading;
+        this.lan = lan;
+        this.summary = summary;
         this.date = date;
         this.content = content;
         this.code = code;
